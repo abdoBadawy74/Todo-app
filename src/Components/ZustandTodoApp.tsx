@@ -1,18 +1,15 @@
-// src/components/TodoApp.tsx
+// src/components/ZustandTodoApp.tsx
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { addTodo, toggleTodo, deleteTodo, editTodo } from "../redux/todoSlice";
+import useTodoStore from "../store/useTodoStore";
 import TodoItem from "./TodoItem";
 
-const TodoApp: React.FC = () => {
-  const todos = useSelector((state: RootState) => state.todos.todos);
-  const dispatch = useDispatch();
+const ZustandTodoApp: React.FC = () => {
+  const { todos, addTodo, toggleTodo, deleteTodo, editTodo } = useTodoStore();
   const [newTodo, setNewTodo] = useState("");
 
   const handleAddTodo = () => {
     if (newTodo.trim() === "") return;
-    dispatch(addTodo(newTodo));
+    addTodo(newTodo);
     setNewTodo("");
   };
 
@@ -24,7 +21,7 @@ const TodoApp: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Todo List (Redux)</h1>
+      <h1 className="text-2xl font-bold mb-4">Todo List (Zustand)</h1>
       <div className="mb-4">
         <input
           type="text"
@@ -46,9 +43,9 @@ const TodoApp: React.FC = () => {
           <TodoItem
             key={todo.id}
             todo={todo}
-            toggleTodo={() => dispatch(toggleTodo(todo.id))}
-            deleteTodo={() => dispatch(deleteTodo(todo.id))}
-            editTodo={(text) => dispatch(editTodo({ id: todo.id, text }))}
+            toggleTodo={() => toggleTodo(todo.id)}
+            deleteTodo={() => deleteTodo(todo.id)}
+            editTodo={(text) => editTodo(todo.id, text)}
           />
         ))}
       </ul>
@@ -56,4 +53,5 @@ const TodoApp: React.FC = () => {
   );
 };
 
-export default TodoApp;
+export default ZustandTodoApp;
+

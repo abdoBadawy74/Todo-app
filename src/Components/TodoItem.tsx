@@ -9,9 +9,9 @@ interface Todo {
 
 interface TodoItemProps {
   todo: Todo;
-  toggleTodo: (id: number) => void;
-  deleteTodo: (id: number) => void;
-  editTodo: (id: number, newText: string) => void;
+  toggleTodo: () => void;
+  deleteTodo: () => void;
+  editTodo: (text: string) => void;
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({
@@ -28,7 +28,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   };
 
   const handleSave = () => {
-    editTodo(todo.id, editText);
+    editTodo(editText);
     setIsEditing(false);
   };
 
@@ -45,7 +45,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           className={`flex-1 cursor-pointer ${
             todo.completed ? "line-through" : ""
           }`}
-          onClick={() => toggleTodo(todo.id)}
+          onClick={toggleTodo}
         >
           {todo.text}
         </span>
@@ -68,7 +68,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         )}
         <button
           className="bg-red-500 text-white py-1 px-2 rounded"
-          onClick={() => deleteTodo(todo.id)}
+          onClick={deleteTodo}
         >
           Delete
         </button>
