@@ -20,7 +20,9 @@ const useTodoStore = create<TodoStore>((set) => ({
       ),
     })),
   deleteTodo: (id) =>
-    set((state) => ({ todos: state.todos.filter((todo) => todo.id !== id) })),
+    set((state) => ({
+      todos: state.todos.filter((todo) => todo.id !== id),
+    })),
   editTodo: (id, text) =>
     set((state) => ({
       todos: state.todos.map((todo) =>
